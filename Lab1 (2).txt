@@ -1,0 +1,59 @@
+import numpy as np
+f = open('task1.txt', 'r')
+Data = []
+Sum = []
+
+for i in f:
+    Data.append([float(j.replace(',', '.')) for j in i.split()])
+
+for i in range(len(Data[0])):
+    Sum.append(0)
+
+#print(np.matrix(Sum))
+print(np.matrix(Data))
+print()
+
+for i in range(len(Data[0])): #по стовпцях (4)
+    for j in range(len(Data) - 1): #по рядках (5 - 1)
+        Data[j][i] = Data[len(Data) - 1][i] * Data[j][i]
+        Sum[j] += Data[j][i]
+
+print(np.matrix(Data))
+print()
+print(np.matrix(Sum))
+print()
+print(max(Sum), 'index: ', Sum.index(max(Sum)) + 1)
+
+
+f = open('task2.txt', 'r')
+Data = []
+Sum = []
+for i in f:
+    Data.append([float(j.replace(',', '.')) for j in i.split()])
+
+for i in range(len(Data[0])):
+    Sum.append(0)
+
+print(np.matrix(Data))
+
+for i in range(len(Data[0])):  # по стовпцях
+    tmp = []
+    for j in range(len(Data) - 2):  # по рядках
+        tmp.append(Data[j][i])
+
+    weight = Data[len(Data) - 1][i]
+
+    for j in range(len(Data) - 1):  # 6 - 1
+        if weight > 0:
+            Data[j][i] = ((Data[j][i] - min(tmp)) / (max(tmp) - min(tmp))) * weight
+        else:
+            Data[j][i] = (max(tmp) - Data[j][i]) / (max(tmp) - min(tmp)) * abs(weight)
+print(np.matrix(Data))
+
+for i in range(len(Data[0])):
+    Sum[i] = sum(Data[i])
+print()
+print(np.matrix(Sum))
+print()
+print(max(Sum), 'index: ', Sum.index(max(Sum)) + 1)
+
